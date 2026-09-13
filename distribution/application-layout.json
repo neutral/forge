@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    [
+      "library/checklist.mjs",
+      "src/checklist.mjs"
+    ],
+    [
+      "library/cockpit.mjs",
+      "src/cockpit.mjs"
+    ],
+    [
+      "library/codex.mjs",
+      "src/codex.mjs"
+    ],
+    [
+      "library/container.mjs",
+      "src/container.mjs"
+    ],
+    [
+      "library/direction.mjs",
+      "src/direction.mjs"
+    ],
+    [
+      "library/index.mjs",
+      "src/index.mjs"
+    ],
+    [
+      "library/steer.mjs",
+      "src/steer.mjs"
+    ],
+    [
+      "library/version.mjs",
+      "src/version.mjs"
+    ],
+    [
+      "library/workspace.mjs",
+      "src/workspace.mjs"
+    ],
+    [
+      "apps/cli/forge.mjs",
+      "cli/forge.mjs"
+    ],
+    [
+      "apps/cockpit/cockpit.css",
+      "web/cockpit.css"
+    ],
+    [
+      "apps/cockpit/cockpit.js",
+      "web/cockpit.js"
+    ],
+    [
+      "apps/cockpit/index.html",
+      "web/index.html"
+    ],
+    [
+      "distribution/worker-entry.mjs",
+      "runtime/worker-entry.mjs"
+    ],
+    [
+      "docs/install.md",
+      "guides/install.md"
+    ],
+    [
+      "docs/integration.md",
+      "guides/integration.md"
+    ],
+    [
+      "docs/codex-binding.md",
+      "guides/codex-binding.md"
+    ],
+    [
+      "docs/cockpit.md",
+      "guides/cockpit.md"
+    ],
+    [
+      "spec/OPERATING.md",
+      "guides/operate.md"
+    ],
+    [
+      "spec/README.md",
+      "spec/README.md"
+    ],
+    [
+      "spec/SPEC.md",
+      "spec/SPEC.md"
+    ],
+    [
+      "spec/spec/CHECKLIST.md",
+      "spec/spec/CHECKLIST.md"
+    ],
+    [
+      "spec/spec/COCKPIT.md",
+      "spec/spec/COCKPIT.md"
+    ],
+    [
+      "spec/spec/COMMUNICATOR.md",
+      "spec/spec/COMMUNICATOR.md"
+    ],
+    [
+      "spec/spec/DIRECTION.md",
+      "spec/spec/DIRECTION.md"
+    ],
+    [
+      "spec/spec/DISTRIBUTION.md",
+      "spec/spec/DISTRIBUTION.md"
+    ],
+    [
+      "spec/spec/WORKSPACE.md",
+      "spec/spec/WORKSPACE.md"
+    ],
+    [
+      "LICENSE",
+      "LICENSE"
+    ],
+    [
+      "LICENSE.0BSD",
+      "LICENSE.0BSD"
+    ],
+    [
+      "LICENSE.CC0-1.0",
+      "LICENSE.CC0-1.0"
+    ]
+  ],
+  "rewrites": [
+    {
+      "file": "apps/cli/forge.mjs",
+      "from": "../../library/",
+      "to": "../src/",
+      "count": 10,
+      "reason": "Relocate source reference into the installed application layout."
+    },
+    {
+      "file": "library/cockpit.mjs",
+      "from": "../apps/cockpit/",
+      "to": "../web/",
+      "count": 1,
+      "reason": "Relocate source reference into the installed application layout."
+    },
+    {
+      "file": "library/steer.mjs",
+      "from": "../apps/cli/forge.mjs",
+      "to": "../cli/forge.mjs",
+      "count": 1,
+      "reason": "Relocate source reference into the installed application layout."
+    },
+    {
+      "file": "library/steer.mjs",
+      "from": "../spec/OPERATING.md",
+      "to": "../guides/operate.md",
+      "count": 1,
+      "reason": "Relocate source reference into the installed application layout."
+    },
+    {
+      "file": "distribution/worker-entry.mjs",
+      "from": "../library/",
+      "to": "../src/",
+      "count": 1,
+      "reason": "Relocate source reference into the installed application layout."
+    }
+  ],
+  "externalLinks": [
+    "docs/verification.md",
+    "examples/greeting/README.md"
+  ]
+}

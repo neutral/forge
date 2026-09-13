@@ -1,0 +1,59 @@
+{
+  "name": "@neutral/forge",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "CC0-1.0 OR 0BSD",
+  "description": "Directions, direct Worker steering, stored progress and a container cockpit.",
+  "engines": {
+    "node": ">=24"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neutral/forge.git"
+  },
+  "homepage": "https://github.com/neutral/forge",
+  "bin": {
+    "forge": "application/bin/forge"
+  },
+  "exports": {
+    ".": "./application/src/index.mjs",
+    "./workspace": "./application/src/workspace.mjs",
+    "./direction": "./application/src/direction.mjs",
+    "./cockpit": "./application/src/cockpit.mjs"
+  },
+  "files": [
+    "application/",
+    "docs/README.md",
+    "docs/cockpit.md",
+    "docs/codex-binding.md",
+    "docs/getting-started.md",
+    "docs/install.md",
+    "docs/integration.md",
+    "docs/releases.md",
+    "docs/verification.md",
+    "distribution/README.md",
+    "spec/",
+    "examples/greeting/",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "LICENSE.0BSD",
+    "LICENSE.CC0-1.0"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check 'apps/cli/forge.mjs' && node --check 'apps/cockpit/cockpit.js' && node --check 'distribution/build.mjs' && node --check 'distribution/pack.mjs' && node --check 'distribution/verify-package.mjs' && node --check 'distribution/worker-entry.mjs' && node --check 'library/checklist.mjs' && node --check 'library/cockpit.mjs' && node --check 'library/codex.mjs' && node --check 'library/container.mjs' && node --check 'library/direction.mjs' && node --check 'library/index.mjs' && node --check 'library/steer.mjs' && node --check 'library/version.mjs' && node --check 'library/workspace.mjs'",
+    "prepack": "node distribution/pack.mjs",
+    "postpack": "node distribution/pack.mjs --clean",
+    "package": "npm pack",
+    "verify:package": "node distribution/verify-package.mjs"
+  }
+}

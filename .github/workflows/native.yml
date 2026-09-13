@@ -1,0 +1,49 @@
+name: Native bundles
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  assemble:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [darwin-arm64, darwin-x64, linux-arm64, linux-x64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: npm test && npm run check
+      - name: Assemble the application and pinned native runtime
+        env:
+          FORGE_TARGET: ${{ matrix.target }}
+          FORGE_OUTPUT: ${{ runner.temp }}/forge-build
+          SOURCE_DATE_EPOCH: '0'
+        run: node distribution/build.mjs --source "$GITHUB_WORKSPACE" --output "$FORGE_OUTPUT" --target "$FORGE_TARGET"
+      - name: Verify archives and exercise the runner's native target
+        env:
+          FORGE_TARGET: ${{ matrix.target }}
+          FORGE_OUTPUT: ${{ runner.temp }}/forge-build
+        run: |
+          cd "$FORGE_OUTPUT"
+          sha256sum --check SHA256SUMS
+          if [ "$FORGE_TARGET" = linux-x64 ]; then
+            for forge_directory in forge-*-linux-x64; do
+              env PATH=/nonexistent "$FORGE_OUTPUT/$forge_directory/bin/forge" --help
+              env PATH=/nonexistent "$FORGE_OUTPUT/$forge_directory/bin/forge" --version
+            done
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: forge-${{ matrix.target }}
+          path: |
+            ${{ runner.temp }}/forge-build/*.tar.gz
+            ${{ runner.temp }}/forge-build/release.json
+            ${{ runner.temp }}/forge-build/SHA256SUMS

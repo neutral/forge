@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Forge Cockpit</title>
+  <link rel="stylesheet" href="/cockpit.css">
+  <script src="/cockpit.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Directions">
+      <a class="brand" href="/" aria-label="Forge Cockpit home"><span class="brand-mark" aria-hidden="true">F</span><span>forge<span class="brand-caption">COCKPIT</span></span></a>
+      <div class="sidebar-heading"><h1>Directions</h1><span id="direction-count" class="count">0</span></div>
+      <button id="new-direction" class="button button-primary new-direction" type="button"><span aria-hidden="true">+</span> New Direction</button>
+      <p class="sidebar-help">Each Worker has its own goal and progress.</p>
+      <div id="direction-list" class="direction-list"><p class="empty-small">Loading Directions…</p></div>
+      <div class="sidebar-footer"><span class="live-dot" aria-hidden="true"></span><span>Refreshes the visible view every 5s</span></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><span class="eyebrow">CONTAINER WORKSPACE</span><span id="workspace-label" class="workspace-label">Forge</span></div><div class="refresh-controls"><span id="refreshed-at" class="muted small"></span><button id="refresh" class="button button-secondary button-compact" type="button">Refresh</button></div></header>
+      <div id="connection-error" class="notice notice-error" role="status" hidden></div>
+      <section class="page-heading"><div><span id="view-eyebrow" class="eyebrow">DIRECTION</span><h2 id="view-title">Your workspace, in view.</h2><p id="view-description" class="muted">Select a Direction to inspect its goal, checklist and authored progress.</p></div><span id="worker-badge" class="badge" hidden></span></section>
+      <nav id="detail-tabs" class="tabs" aria-label="Direction views" hidden><button class="tab active" data-tab="overview" type="button" aria-current="page">Overview</button><button class="tab" data-tab="checklist" type="button">Checklist</button><button class="tab" data-tab="diff" type="button">Workspace diff</button></nav>
+      <div id="content" class="content"><div class="welcome"><span class="welcome-symbol" aria-hidden="true">↗</span><h3>A place for each Direction.</h3><p>Create a Direction with a goal, then send STEER to its Worker.</p></div></div>
+      <section id="steer-section" class="panel steer-panel" aria-labelledby="steer-title" hidden>
+        <div class="panel-heading"><div><span class="eyebrow">DIRECTOR → WORKER</span><h3 id="steer-title">Send STEER</h3></div><span id="steer-direction" class="muted small"></span></div>
+        <form id="steer-form">
+          <label class="sr-only" for="steer-text">Direction or context for the Worker</label>
+          <textarea id="steer-text" name="text" rows="4" placeholder="Set the goal, refine the work, or supply context…" required></textarea>
+          <div class="composer-bottom"><fieldset class="worker-choice"><legend class="sr-only">Worker selection</legend><label><input id="worker-existing" type="radio" name="worker-mode" value="existing" checked> Existing Worker</label><label><input id="worker-fresh" type="radio" name="worker-mode" value="fresh"> Fresh Worker</label></fieldset><button id="send-steer" class="button button-primary" type="submit">Send STEER <span aria-hidden="true">↗</span></button></div>
+          <p id="steer-help" class="muted small">Delivered directly to the selected Worker. Authored results appear in PROGRESS.</p>
+          <div id="steer-result" class="notice" role="status" hidden></div>
+        </form>
+      </section>
+    </main>
+  </div>
+  <dialog id="create-dialog" aria-labelledby="create-title">
+    <form id="create-form">
+      <div class="panel-heading"><div><span class="eyebrow">A NEW PLACE TO WORK</span><h2 id="create-title">New Direction</h2></div><button id="close-dialog" class="close-button" type="button" aria-label="Close">×</button></div>
+      <label for="direction-name">Name</label><input id="direction-name" name="name" placeholder="parser-improvements" autocomplete="off" required><p class="muted small field-help">A short folder name for this Direction.</p>
+      <label for="direction-goal">Goal</label><textarea id="direction-goal" name="goal" rows="6" placeholder="What should this Worker pursue?" required></textarea>
+      <div id="create-error" class="notice notice-error" role="status" hidden></div>
+      <div class="dialog-actions"><button id="cancel-create" class="button button-secondary" type="button">Cancel</button><button id="create-submit" class="button button-primary" type="submit">Create Direction</button></div>
+      <p class="muted small">Send STEER when you are ready to start a Worker.</p>
+    </form>
+  </dialog>
+</body>
+</html>

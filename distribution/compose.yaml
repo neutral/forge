@@ -1,0 +1,35 @@
+name: ${COMPOSE_PROJECT_NAME:?Set COMPOSE_PROJECT_NAME}
+
+services:
+  worker:
+    build:
+      context: ${FORGE_SOURCE:?Set FORGE_SOURCE to an absolute Forge public source checkout}
+      dockerfile: distribution/worker.Dockerfile
+    image: ${FORGE_IMAGE:-forge-worker:local}
+    container_name: ${FORGE_CONTAINER:-${COMPOSE_PROJECT_NAME}-worker}
+    init: true
+    restart: "no"
+    network_mode: bridge
+    environment:
+      FORGE_CONTAINER: ${FORGE_CONTAINER:-${COMPOSE_PROJECT_NAME}-worker}
+      FORGE_WORKSPACE: /workspace
+      FORGE_BIND: 0.0.0.0
+      FORGE_PORT: 4310
+      CODEX_HOME: /var/lib/forge/codex
+      FORGE_SANDBOX: ${FORGE_SANDBOX:-danger-full-access}
+      FORGE_APPROVAL_POLICY: ${FORGE_APPROVAL_POLICY:-never}
+    ports:
+      - "127.0.0.1:${FORGE_PORT:-4310}:4310"
+    volumes:
+      - type: bind
+        source: ${FORGE_WORKSPACE:?Set FORGE_WORKSPACE to an existing absolute checkout path}
+        target: /workspace
+        bind:
+          create_host_path: false
+      - type: volume
+        source: codex
+        target: /var/lib/forge/codex
+
+volumes:
+  codex:
+    name: ${FORGE_CODEX_VOLUME:-${COMPOSE_PROJECT_NAME}-codex}

@@ -1,0 +1,23 @@
+# Only public application assembly inputs enter the Worker build context.
+**
+!package.json
+!LICENSE*
+!library/
+!library/**
+!apps/
+!apps/**
+!docs/
+!docs/**
+!spec/
+!spec/**
+!distribution/
+!distribution/build.mjs
+!distribution/application-layout.json
+!distribution/worker-entry.mjs
+!distribution/worker.Dockerfile
+**/.git
+**/.env*
+**/node_modules
+**/*.log
+**/*.sqlite*
+**/auth.json

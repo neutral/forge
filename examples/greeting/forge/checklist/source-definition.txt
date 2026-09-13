@@ -1,0 +1,3 @@
+Source Check definition, supplied unchanged:
+Unicode code points and spaces inside a nonblank name must survive greeting construction.
+An assessor may inspect the implementation and selected cases; this definition prescribes no command or schema.

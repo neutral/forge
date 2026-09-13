@@ -1,0 +1,11 @@
+node_modules/
+.DS_Store
+*.log
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.env
+.env.*
+.forge/
+/application/
+/neutral-forge-*.tgz
