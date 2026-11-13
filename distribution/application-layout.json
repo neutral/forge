@@ -120,6 +120,10 @@
     [
       "LICENSE.CC0-1.0",
       "LICENSE.CC0-1.0"
+    ],
+    [
+      "THIRD_PARTY.md",
+      "THIRD_PARTY.md"
     ]
   ],
   "rewrites": [

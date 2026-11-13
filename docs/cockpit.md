@@ -16,7 +16,13 @@ does not start a Worker. Select a Direction to inspect its views:
 - **Overview** reads the goal and recent Worker-authored PROGRESS. Load earlier
   accounts when needed.
 - **Checklist** reads the Direction's checklist files.
-- **Git diff** inspects saved changes in the selected workspace.
+- **Workspace diff** inspects saved changes in the shared workspace.
+
+Above every view, the Direction's binding names its folder, Worker, container, and
+workspace. The page address holds the selected Direction, view, and compared
+reference, so reload, back, and forward return to them. Every status is a mark and
+a word. Red marks what needs the Director's attention: a read failure, an unusable
+reference, or a refused STEER or Direction.
 
 Automatic refresh reads the selected view's material without invoking a Worker.
 An unavailable document produces an error in its view alongside the binding; it
@@ -32,8 +38,9 @@ attribution. Unsupported storage and invalid routing metadata fail visibly.
 ## Sending STEER
 
 Select the existing Worker or explicitly choose a fresh Worker, write the
-instruction, and send it. Drafts survive refreshes and remain associated with their
-Direction. Follow-up STEER reaches the saved conversation. Use it to supply context,
+instruction, and send it. Drafts survive refreshes and switching between Directions,
+and remain associated with their Direction; reloading the page discards them.
+Follow-up STEER reaches the saved conversation. Use it to supply context,
 answer a question, request information, or explicitly continue development.
 
 The result identifies host submission or an error. Submission does not prove that
@@ -48,9 +55,9 @@ selecting a policy that requires interactive decisions.
 
 ## Reviewing changes
 
-The Git view initially shows **Uncommitted changes** against current `HEAD`: staged
-and unstaged changes, plus untracked files. Choose a branch, tag, or commit to
-compare the saved tree with another reference. An unavailable reference produces
+The Workspace diff view initially shows **Uncommitted changes** against current
+`HEAD`: staged and unstaged changes, plus untracked files. Choose a branch, tag, or
+commit to compare the saved tree with another reference. An unavailable reference produces
 an error. Forge saves no implicit starting commit for a Direction.
 
 The diff covers the workspace as a whole, so it cannot attribute changes to a

@@ -8,12 +8,12 @@ On macOS or Linux, use Node.js 24 or newer and npm. Windows is not a supported n
 installation target.
 
 ```sh
-npx @neutral/forge@0.1.0 --version
-npx @neutral/forge@0.1.0 --help
+npx @neutral/forge@0.1.1 --version
+npx @neutral/forge@0.1.1 --help
 ```
 
-Use `npx @neutral/forge@0.1.0` for each Forge invocation. In other guides, host-side
-examples written as `forge ...` can use `npx @neutral/forge@0.1.0 ...`. The npm package
+Use `npx @neutral/forge@0.1.1` for each Forge invocation. In other guides, host-side
+examples written as `forge ...` can use `npx @neutral/forge@0.1.1 ...`. The npm package
 includes the command, shared library, prebuilt cockpit, operating guides, contracts,
 and container startup adapter. It uses the Node runtime on your machine and has no
 runtime dependencies to install separately. Continue with
@@ -27,7 +27,7 @@ using the versioned application payload with one compatible shared Node runtime.
 Install the package in the application that imports it:
 
 ```sh
-npm install @neutral/forge@0.1.0
+npm install @neutral/forge@0.1.1
 ```
 
 ```js
@@ -46,8 +46,8 @@ against the release's `SHA256SUMS`, then extract the complete directory:
 
 ```sh
 mkdir -p "$HOME/.local/share/forge" "$HOME/.local/bin"
-tar -xzf forge-0.1.0-darwin-arm64.tar.gz -C "$HOME/.local/share/forge"
-ln -s "$HOME/.local/share/forge/forge-0.1.0-darwin-arm64/bin/forge" "$HOME/.local/bin/forge"
+tar -xzf forge-0.1.1-darwin-arm64.tar.gz -C "$HOME/.local/share/forge"
+ln -s "$HOME/.local/share/forge/forge-0.1.1-darwin-arm64/bin/forge" "$HOME/.local/bin/forge"
 "$HOME/.local/bin/forge" --version
 "$HOME/.local/bin/forge" --help
 ```
@@ -70,12 +70,12 @@ The source includes an independently usable Worker recipe. From a Forge source
 checkout, build and create a separately named container:
 
 ```sh
-docker build -f distribution/worker.Dockerfile -t forge-worker:0.1.0 .
+docker build -f distribution/worker.Dockerfile -t forge-worker:0.1.1 .
 docker run --detach --init --name forge-worker \
   --env FORGE_CONTAINER=forge-worker \
   --mount type=bind,source=/absolute/path/to/project,target=/workspace \
   --mount type=volume,source=forge-worker-codex,target=/var/lib/forge/codex \
-  --publish 127.0.0.1:4310:4310 forge-worker:0.1.0
+  --publish 127.0.0.1:4310:4310 forge-worker:0.1.1
 ```
 
 Select an existing project directory and distinct container and volume names. Quote
@@ -96,7 +96,7 @@ Authenticate the selected container through the native host's normal login flow:
 docker exec -it forge-worker codex login --device-auth
 docker exec forge-worker codex login status
 docker restart forge-worker
-npx @neutral/forge@0.1.0 open --container forge-worker
+npx @neutral/forge@0.1.1 open --container forge-worker
 ```
 
 Use only credentials authorized for that environment. The cockpit is published on
@@ -118,10 +118,10 @@ describes saved settings and approval handling.
 Use npx with the existing container name:
 
 ```sh
-npx @neutral/forge@0.1.0 open --container forge-worker
-npx @neutral/forge@0.1.0 open --container forge-worker --no-browser
-npx @neutral/forge@0.1.0 show --container forge-worker --direction /workspace/.forge/directions/example
-npx @neutral/forge@0.1.0 progress --container forge-worker --direction /workspace/.forge/directions/example --latest
+npx @neutral/forge@0.1.1 open --container forge-worker
+npx @neutral/forge@0.1.1 open --container forge-worker --no-browser
+npx @neutral/forge@0.1.1 show --container forge-worker --direction /workspace/.forge/directions/example
+npx @neutral/forge@0.1.1 progress --container forge-worker --direction /workspace/.forge/directions/example --latest
 ```
 
 Opening inspects the container's actual state, installed identity, and published
@@ -157,7 +157,7 @@ To keep the old container, stop it and create a distinctly named replacement wit
 the selected workspace and retained native volume. Allow only one container to
 write that native state at a time. Keep the saved configuration for each container.
 
-To use another Forge version with npx, replace `@0.1.0` with that version. Keep the
+To use another Forge version with npx, replace `@0.1.1` with that version. Keep the
 selected controller version aligned with the Worker container's Forge payload.
 
 For a native bundle, upgrade by extracting a new versioned directory, checking its
@@ -183,8 +183,8 @@ same npm package from the checkout:
 
 ```sh
 npm pack
-npx --package ./neutral-forge-0.1.0.tgz forge --version
-npx --package ./neutral-forge-0.1.0.tgz forge --help
+npx --package ./neutral-forge-0.1.1.tgz forge --version
+npx --package ./neutral-forge-0.1.1.tgz forge --help
 ```
 
 `npm pack` assembles the application automatically. The archive includes its runtime

@@ -15,7 +15,7 @@ node distribution/build.mjs --source /absolute/forge-source --output /absolute/n
 node distribution/build.mjs --source /absolute/forge-source --output /absolute/new-native --target darwin-arm64
 ```
 
-`npm pack` assembles `neutral-forge-0.1.0.tgz`, including the application and
+`npm pack` assembles `neutral-forge-0.1.1.tgz`, including the application and
 documentation. The native builder records artifact checksums and runtime identity.
 Read [installation](../docs/install.md) for the target matrix and Worker recipe,
 [integration](../docs/integration.md) for the shared payload, and

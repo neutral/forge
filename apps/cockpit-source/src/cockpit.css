@@ -1,0 +1,232 @@
+/* The sheet (handbook/practices/sheet.md): white paper, two inks, two faces and a red pencil.
+   Black, proportional: what a person or Worker wrote — goals, checklist files, PROGRESS, typed STEER.
+   Blue, fixed-width: everything the cockpit draws — names, states, times, counts, controls, lines, marks.
+   Red: a difference the Director must attend to — a failure, an unusable context, a Worker that needs action.
+   Lines carry the structure, by weight: 1px --blue-7 for the sheet, its strips and rules under titles;
+   --blue-3 hairlines within; a 2px left line for what is selected or opened.
+   React Aria components are styled by their state attributes, never :hover or :focus. */
+:root {
+  color-scheme: light;
+  --paper: #ffffff;
+  --ink: #15191e;    /* what a person or Worker wrote */
+  --blue-9: #1f3a5a; /* the cockpit's text */
+  --blue-7: #3d6288; /* labels, notes, marks, controls, structural lines, focus */
+  --blue-5: #5a7a9b; /* lines only: a struck-out patch line, a hovered field */
+  --blue-3: #b9cadb; /* hairlines and field borders; never text */
+  --blue-1: #edf2f7; /* what is selected or opened; selected text */
+  --blue-0: #f6f8fb; /* a hovered row */
+  --red: #b0412a;    /* a difference the Director must attend to */
+  --red-1: #f9ece8;  /* behind a failure */
+  --gutter: 2.2rem;
+  --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font: 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5, p, dl, dd, pre { margin: 0; }
+h1, h2, h3, h4, h5 { font: inherit; }
+::selection { background: var(--blue-1); }
+[hidden] { display: none !important; }
+
+/* Focus shows on keyboard focus and is never removed. :focus-visible covers the prerendered page. */
+:focus-visible, [data-focus-visible] { outline: 2px solid var(--blue-7); outline-offset: 2px; }
+main:focus { outline: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+/* React Aria's rule for pressable elements: no double-tap delay. The stylesheet's link carries the id
+   React Aria looks for, so it injects no inline style (apps/cockpit-source/build.mjs). */
+@layer { [data-react-aria-pressable] { touch-action: pan-x pan-y pinch-zoom; } }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.skip-link { position: fixed; top: 0.7rem; left: 0.8rem; z-index: 30; padding: 0.45rem 0.8rem; color: var(--paper); background: var(--blue-9); font: 12px/1.5 var(--mono); text-decoration: none; transform: translateY(-200%); }
+.skip-link:focus-visible, .skip-link[data-focus-visible] { transform: none; }
+.noscript { margin: 1rem; font: 12px/1.5 var(--mono); color: var(--blue-9); }
+
+/* Two faces. The cockpit's own words are fixed-width and blue; authored words are proportional and black. */
+.sheet, .modal { font: 12px/1.5 var(--mono); color: var(--blue-9); }
+.authored { font: 15px/1.6 var(--sans); color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; }
+.note { color: var(--blue-7); }
+.label, .part-title, dt, .field label { font-size: 10.5px; line-height: 1.5; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-7); }
+.count { font: 400 12px/1.5 var(--mono); letter-spacing: 0; text-transform: none; color: var(--blue-7); }
+.mark { display: inline-block; flex: none; width: 1.25em; color: var(--blue-7); }
+.attend, .attend .mark { color: var(--red); }
+code { font-family: var(--mono); color: var(--blue-9); overflow-wrap: anywhere; }
+a { color: inherit; text-decoration-color: var(--blue-3); text-decoration-thickness: 1px; text-underline-offset: 3px; overflow-wrap: anywhere; }
+a[data-hovered] { text-decoration-color: currentColor; }
+
+/* the sheet: one border line, a top strip with the title block in its corner */
+.sheet { width: calc(100% - 3.2rem); max-width: 90rem; margin: 1.6rem auto 2.4rem; border: 1px solid var(--blue-7); }
+.top { display: grid; grid-template-columns: minmax(0, 1fr) auto; border-bottom: 1px solid var(--blue-7); }
+.name { align-self: center; padding: 1rem var(--gutter); font-size: 13.5px; line-height: 1.3; font-weight: 600; letter-spacing: 0.01em; color: var(--blue-9); }
+.name a { text-decoration: none; }
+.name a[data-hovered] { text-decoration: underline; text-decoration-color: var(--blue-3); }
+.block { display: flex; }
+.block > .cell { flex: 0 0 15rem; min-width: 0; padding: 0.65rem 0.9rem 0.75rem; border-left: 1px solid var(--blue-7); }
+dt { margin-bottom: 0.15rem; }
+dd { overflow-wrap: anywhere; }
+.read { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; }
+
+/* controls: blue lines on paper; hover and press fill the line's blue */
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 2rem; padding: 0.3rem 0.8rem; border: 1px solid var(--blue-7); border-radius: 3px; background: var(--paper); color: var(--blue-7); font: 500 12px/1.4 var(--mono); white-space: nowrap; cursor: pointer; }
+.button[data-hovered], .button[data-pressed] { background: var(--blue-7); color: var(--paper); }
+.button-primary { background: var(--blue-7); color: var(--paper); }
+.button-primary[data-hovered], .button-primary[data-pressed] { background: var(--blue-9); border-color: var(--blue-9); }
+/* A control that cannot act now says so in its label and by a dashed line. */
+.button[data-pending], .button[data-disabled] { border-style: dashed; background: var(--paper); color: var(--blue-7); cursor: progress; }
+.button[data-disabled] { cursor: not-allowed; }
+
+.field + .field { margin-top: 1rem; }
+.field label { display: block; margin-bottom: 0.3rem; }
+.field .note { display: block; margin-top: 0.3rem; }
+.input { display: block; width: 100%; min-width: 0; padding: 0.45rem 0.6rem; border: 1px solid var(--blue-5); border-radius: 3px; background: var(--paper); color: var(--ink); font: 13.5px/1.5 var(--mono); }
+.input.authored { font: 15px/1.6 var(--sans); white-space: pre-wrap; resize: vertical; }
+.input[data-hovered] { border-color: var(--blue-7); }
+.input[data-focused] { border-color: var(--blue-7); }
+.input[data-invalid] { border-color: var(--red); }
+.input::placeholder { color: var(--blue-7); opacity: 1; font: 12px/1.6 var(--mono); }
+
+.radio { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2rem; color: var(--blue-9); cursor: pointer; }
+.radio .indicator { position: relative; flex: none; width: 0.9rem; height: 0.9rem; border: 1px solid var(--blue-7); border-radius: 50%; background: var(--paper); }
+.radio[data-hovered] .indicator { background: var(--blue-1); }
+.radio[data-selected] .indicator::after { content: ""; position: absolute; inset: 0.18rem; border-radius: 50%; background: var(--blue-7); }
+.radio[data-focus-visible] { outline: none; }
+.radio[data-focus-visible] .indicator { outline: 2px solid var(--blue-7); outline-offset: 2px; }
+.radio[data-disabled] { color: var(--blue-7); cursor: not-allowed; }
+.radio[data-disabled] .indicator { border-style: dashed; background: var(--paper); }
+
+/* the body: the Directions beside the selected Direction */
+.body { display: grid; grid-template-columns: 15rem minmax(0, 1fr); }
+.directions { min-width: 0; padding: 1.5rem 1.1rem; border-right: 1px solid var(--blue-7); }
+.main { min-width: 0; padding: 1.5rem var(--gutter) 2.2rem; container-type: inline-size; }
+
+/* a part's title: its name in capitals and a rule drawn out to its edge */
+.part-title { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 0.75rem; font-weight: 600; }
+.part-title::after { content: ""; flex: 1; border-top: 1px solid var(--blue-7); }
+.part { min-width: 0; margin-top: 1.5rem; }
+
+.new-direction { margin-bottom: 1rem; }
+.empty { color: var(--blue-7); }
+.direction-list { border-top: 1px solid var(--blue-3); }
+.direction-option { display: block; padding: 0.5rem 0.6rem 0.55rem; border-bottom: 1px solid var(--blue-3); border-left: 2px solid transparent; cursor: pointer; }
+.direction-option[data-hovered] { background: var(--blue-0); }
+.direction-option[data-selected] { border-left-color: var(--blue-7); background: var(--blue-1); }
+.direction-name { display: block; font-size: 13.5px; font-weight: 600; color: var(--blue-9); overflow-wrap: anywhere; }
+.direction-meta { display: flex; margin-top: 0.1rem; color: var(--blue-7); }
+
+/* the selected Direction: its name, and its binding as a title block of ruled cells */
+.direction-head h2 { font-size: 19px; line-height: 1.25; font-weight: 600; letter-spacing: 0.01em; color: var(--blue-9); overflow-wrap: anywhere; }
+.binding { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1fr); gap: 1px; margin-top: 0.75rem; border: 1px solid var(--blue-7); background: var(--blue-3); }
+.binding .cell { min-width: 0; padding: 0.45rem 0.75rem 0.55rem; background: var(--paper); }
+.worker-id { display: block; }
+.worker-state, .worker-state .note { display: block; }
+.prompt { margin-top: 0.75rem; }
+.empty-state { margin-top: 0.75rem; }
+.empty-title { font-weight: 600; }
+.empty-state p + p { margin-top: 0.15rem; color: var(--blue-7); }
+
+/* the views: a switch of three; the selected one is filled */
+.views { margin-top: 1rem; }
+.switch { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--blue-7); border-radius: 3px; }
+.switch-option { min-height: 2rem; padding: 0.3rem 0.8rem; color: var(--blue-7); font-weight: 500; line-height: 1.4; cursor: pointer; display: flex; align-items: center; }
+.switch-option + .switch-option { border-left: 1px solid var(--blue-7); }
+.switch-option[data-hovered] { background: var(--blue-1); }
+.switch-option[data-selected] { background: var(--blue-7); color: var(--paper); }
+/* Tabs mark focus within themselves; the focused tab or panel shows it, not the whole set. */
+.views[data-focus-visible] { outline: none; }
+.view { min-width: 0; }
+
+.notice { display: flex; max-width: 60rem; margin-top: 0.75rem; padding: 0.45rem 0.75rem; border-left: 2px solid var(--blue-7); overflow-wrap: anywhere; }
+.notice-error { border-left-color: var(--red); background: var(--red-1); color: var(--red); }
+.notice-error .mark { color: var(--red); }
+
+/* Overview: the goal beside the PROGRESS accounts */
+.overview { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); column-gap: var(--gutter); align-items: start; }
+.goal { max-width: 40rem; }
+.progress-list { max-height: 34rem; overflow: auto; padding-right: 0.5rem; border-bottom: 1px solid var(--blue-3); }
+.account { padding: 0.75rem 0; }
+.account:first-child { padding-top: 0.25rem; }
+.account + .account { border-top: 1px solid var(--blue-3); }
+.account-meta { display: flex; flex-wrap: wrap; gap: 0.1rem 0.75rem; color: var(--blue-7); }
+.author { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; color: var(--blue-9); }
+.account-body { margin-top: 0.3rem; max-width: 46rem; }
+.account .note { margin-top: 0.3rem; }
+.progress-history { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; padding-top: 0.75rem; }
+
+/* stored files: a ruled list; an opened file lies on a wash with a line down its left */
+.files { border-top: 1px solid var(--blue-3); }
+.file { border-bottom: 1px solid var(--blue-3); }
+.file-trigger { display: flex; align-items: baseline; width: 100%; min-height: 2rem; padding: 0.45rem 0; border: 0; background: none; color: var(--blue-9); font: 12px/1.5 var(--mono); text-align: left; overflow-wrap: anywhere; cursor: pointer; }
+.file-trigger[data-hovered] { background: var(--blue-0); }
+.file-panel > * { margin-bottom: 0.75rem; }
+.file-panel pre { max-height: 35rem; overflow: auto; padding: 0.6rem 0.8rem; border-left: 2px solid var(--blue-7); background: var(--blue-1); white-space: pre-wrap; overflow-wrap: anywhere; }
+pre.code { font: 12px/1.6 var(--mono); color: var(--ink); }
+
+/* Workspace diff */
+.diff-controls { max-width: 36rem; margin-bottom: 1rem; }
+.control-row { display: flex; gap: 0.5rem; }
+.facts > div { display: grid; grid-template-columns: 8rem minmax(0, 1fr); column-gap: 1rem; padding: 0.4rem 0; border-top: 1px solid var(--blue-3); }
+.facts > div:last-child { border-bottom: 1px solid var(--blue-3); }
+.facts dt { margin: 0; padding-top: 0.1rem; }
+.commit { margin-left: 0.75rem; color: var(--blue-7); }
+.facts dd > span + span:not(.commit) { margin-left: 0.75rem; }
+pre.status { max-height: 12rem; overflow: auto; font: 12px/1.6 var(--mono); color: var(--blue-9); white-space: pre; }
+pre.patch { max-height: 45rem; overflow: auto; margin-top: 1rem; padding: 0.5rem 0; border: 1px solid var(--blue-3); font: 12px/1.6 var(--mono); color: var(--ink); white-space: pre; tab-size: 4; }
+.line { display: block; width: max-content; min-width: 100%; min-height: 1.6em; padding: 0 0.8rem; }
+.line-file { font-weight: 600; color: var(--blue-9); }
+.line-hunk { color: var(--blue-7); }
+.line-added { background: var(--blue-1); }
+.line-removed { text-decoration: line-through; text-decoration-color: var(--blue-5); }
+.untracked-title { margin: 1.25rem 0 0.4rem; }
+
+/* Send STEER */
+.steer { margin-top: 2.2rem; }
+.steer textarea { min-height: 6.5rem; }
+.composer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; margin-top: 0.6rem; }
+.worker-choice { display: flex; flex-wrap: wrap; gap: 0 1.25rem; }
+.steer .note { margin-top: 0.4rem; }
+
+/* the New Direction dialog: the one thing that lies over the sheet, so it alone has a shadow */
+.overlay { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 1rem; background: rgba(31, 58, 90, 0.26); }
+.modal { width: min(34rem, 100%); max-height: calc(100vh - 2rem); overflow: auto; border: 1px solid var(--blue-7); background: var(--paper); box-shadow: 0 16px 48px rgba(31, 58, 90, 0.16); }
+.dialog { padding: 1.1rem 1.4rem 1.3rem; }
+.dialog[data-focus-visible] { outline-offset: -4px; }
+.dialog .part-title { margin-bottom: 0.25rem; }
+.dialog .field { margin-top: 1rem; }
+.dialog form > .note { margin-top: 1rem; }
+.actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem; }
+
+@container (max-width: 52rem) {
+  .binding { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container (max-width: 48rem) {
+  .overview { grid-template-columns: minmax(0, 1fr); }
+}
+@container (max-width: 28rem) {
+  .binding { grid-template-columns: minmax(0, 1fr); }
+  .facts > div { grid-template-columns: minmax(0, 1fr); row-gap: 0.15rem; }
+}
+@media (max-width: 64rem) {
+  .top { grid-template-columns: minmax(0, 1fr); }
+  .name { padding: 0.9rem var(--gutter) 0.8rem; }
+  .block > .cell { flex: 1 1 0; }
+  .block > .cell { border-top: 1px solid var(--blue-7); }
+  .block > .cell:first-child { border-left: 0; }
+}
+@media (max-width: 48rem) {
+  :root { --gutter: 1.1rem; }
+  .sheet { width: calc(100% - 1.2rem); margin: 0.6rem auto; }
+  .body { grid-template-columns: minmax(0, 1fr); }
+  .directions { padding: 1.1rem var(--gutter); border-right: 0; border-bottom: 1px solid var(--blue-7); }
+  /* A long list scrolls in place so the selected Direction stays near; the padding keeps focus visible. */
+  .direction-list { max-height: 15rem; overflow: auto; margin: 0 -4px; padding: 0 4px 4px; }
+  .main { padding: 1.1rem var(--gutter) 1.6rem; }
+  /* On a phone the page itself scrolls through PROGRESS. */
+  .progress-list { max-height: none; overflow: visible; padding-right: 0; }
+}
+@media (max-width: 40rem) {
+  .block { flex-direction: column; }
+  .block > .cell { border-left: 0; }
+}

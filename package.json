@@ -1,6 +1,6 @@
 {
   "name": "@neutral/forge",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "license": "CC0-1.0 OR 0BSD",
   "description": "Directions, direct Worker steering, stored progress and a container cockpit.",
@@ -42,7 +42,8 @@
     "CONTRIBUTING.md",
     "LICENSE",
     "LICENSE.0BSD",
-    "LICENSE.CC0-1.0"
+    "LICENSE.CC0-1.0",
+    "THIRD_PARTY.md"
   ],
   "publishConfig": {
     "access": "public",
@@ -50,7 +51,7 @@
   },
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check 'apps/cli/forge.mjs' && node --check 'apps/cockpit/cockpit.js' && node --check 'distribution/build.mjs' && node --check 'distribution/pack.mjs' && node --check 'distribution/verify-package.mjs' && node --check 'distribution/worker-entry.mjs' && node --check 'library/checklist.mjs' && node --check 'library/cockpit.mjs' && node --check 'library/codex.mjs' && node --check 'library/container.mjs' && node --check 'library/direction.mjs' && node --check 'library/index.mjs' && node --check 'library/steer.mjs' && node --check 'library/version.mjs' && node --check 'library/workspace.mjs'",
+    "check": "node --check 'apps/cli/forge.mjs' && node --check 'apps/cockpit-source/build.mjs' && node --check 'apps/cockpit-source/vite.config.mjs' && node --check 'apps/cockpit/cockpit.js' && node --check 'distribution/build.mjs' && node --check 'distribution/pack.mjs' && node --check 'distribution/verify-package.mjs' && node --check 'distribution/worker-entry.mjs' && node --check 'library/checklist.mjs' && node --check 'library/cockpit.mjs' && node --check 'library/codex.mjs' && node --check 'library/container.mjs' && node --check 'library/direction.mjs' && node --check 'library/index.mjs' && node --check 'library/steer.mjs' && node --check 'library/version.mjs' && node --check 'library/workspace.mjs'",
     "prepack": "node distribution/pack.mjs",
     "postpack": "node distribution/pack.mjs --clean",
     "package": "npm pack",

@@ -31,7 +31,7 @@ export function validatePackageFiles(files, metadata) {
   assert.notEqual(metadata.private, true);
   assert.equal(metadata.bin.forge, 'application/bin/forge');
   for (const relative of [metadata.bin.forge, ...Object.values(metadata.exports).map(value => value.replace(/^\.\//, '')),
-    'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'LICENSE', 'LICENSE.0BSD', 'LICENSE.CC0-1.0',
+    'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'LICENSE', 'LICENSE.0BSD', 'LICENSE.CC0-1.0', 'THIRD_PARTY.md', 'application/THIRD_PARTY.md',
     'docs/install.md', 'docs/releases.md', 'docs/integration.md', 'spec/SPEC.md', 'spec/OPERATING.md',
     'examples/greeting/README.md', 'application/forge-application.json', 'application/runtime/worker-entry.mjs',
     'application/web/index.html', 'application/web/cockpit.js', 'application/web/cockpit.css', 'application/guides/operate.md']) {
@@ -39,7 +39,7 @@ export function validatePackageFiles(files, metadata) {
   }
   assert.equal(files.get(metadata.bin.forge).mode & 0o111, 0o111, 'Packaged launcher must be executable');
   for (const [filename, { bytes }] of files) {
-    assert.match(filename, /^(?:application\/|docs\/|spec\/|examples\/greeting\/|distribution\/README\.md$|(?:README\.md|CHANGELOG\.md|CONTRIBUTING\.md|LICENSE(?:\.0BSD|\.CC0-1\.0)?|package\.json)$)/,
+    assert.match(filename, /^(?:application\/|docs\/|spec\/|examples\/greeting\/|distribution\/README\.md$|(?:README\.md|CHANGELOG\.md|CONTRIBUTING\.md|LICENSE(?:\.0BSD|\.CC0-1\.0)?|THIRD_PARTY\.md|package\.json)$)/,
       `Unexpected packaged path: ${filename}`);
     assert.doesNotMatch(filename, /(?:^|\/)(?:node_modules|\.git|\.env(?:\..*)?|AGENTS\.md)(?:\/|$)|\.(?:sqlite(?:-wal|-shm)?|log)$/);
     if (!filename.endsWith('.md')) continue;

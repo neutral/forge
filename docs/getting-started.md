@@ -4,7 +4,7 @@ Follow [installation](install.md) to prepare and authenticate a separately selec
 Worker container. Open its cockpit:
 
 ```sh
-npx @neutral/forge@0.1.0 open --container forge-worker
+npx @neutral/forge@0.1.1 open --container forge-worker
 ```
 
 Create a Direction with a goal. Copy the [greeting example](../examples/greeting/README.md)

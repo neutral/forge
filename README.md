@@ -26,11 +26,11 @@ directly to the selected Worker through its agent host.
 On macOS or Linux, use Node.js 24 or newer and npm:
 
 ```sh
-npx @neutral/forge@0.1.0 --help
-npx @neutral/forge@0.1.0 --version
+npx @neutral/forge@0.1.1 --help
+npx @neutral/forge@0.1.1 --version
 ```
 
-Use `npx @neutral/forge@0.1.0` for each Forge invocation. The package supplies
+Use `npx @neutral/forge@0.1.1` for each Forge invocation. The package supplies
 the command, shared library, prebuilt cockpit, operating guides, and specifications.
 
 ## Build from source
@@ -53,7 +53,7 @@ Create a Worker environment with the [Forge container recipe](docs/install.md#wo
 then select it explicitly:
 
 ```sh
-npx @neutral/forge@0.1.0 open --container forge-worker
+npx @neutral/forge@0.1.1 open --container forge-worker
 ```
 
 Installation places the controller on your machine; Workers execute in the

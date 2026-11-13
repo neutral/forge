@@ -12,14 +12,14 @@ under `application/` inside the package and exposes `forge` plus its library exp
 metadata. The paths below are relative to that application root. Standalone and
 container payloads use the same layout directly at their installation root.
 
-Forge `0.1.0` uses Node `24.0.0` or newer with the built-in `node:sqlite` module.
+Forge `0.1.1` uses Node `24.0.0` or newer with the built-in `node:sqlite` module.
 Standalone bundles pin Node `24.18.0`. Earlier Node 24 versions may emit an experimental SQLite warning;
 disabling SQLite is incompatible. Node `24.18.0` includes SQLite `3.53.1`. The Worker recipe pins Codex CLI `0.153.4`
 and installs its native dependencies for the container's target architecture.
 The application has no npm runtime dependencies.
 
-`forge-0.1.0-application.tar.gz` contains the runtime-free application directory.
-The native archive `forge-0.1.0-OS-ARCH.tar.gz` contains that application and the
+`forge-0.1.1-application.tar.gz` contains the runtime-free application directory.
+The native archive `forge-0.1.1-OS-ARCH.tar.gz` contains that application and the
 platform's Node binary. `forge-application.json` declares schema version 1, layout
 version 1, name, and version. `release.json` records component identities, and `SHA256SUMS` records artifact
 checksums. Each installation also has file checksums; native bundles add
@@ -35,7 +35,7 @@ checksums. Each installation also has file checksums; native bundles add
 | `runtime/node` | Bundled Node in standalone distributions only. |
 | `guides/`, `spec/` | Operating guidance and contracts. |
 | `package.json`, `forge-application.json` | Application and installed-layout identities. |
-| License files | Forge and bundled component notices. |
+| License files, `THIRD_PARTY.md` | Forge's license, and the notices of the components bundled into `web/cockpit.js`. |
 
 Install the complete application under `/opt/forge` in a container. Put
 `/opt/forge/bin` on `PATH`. The launcher uses the bundled runtime when present;

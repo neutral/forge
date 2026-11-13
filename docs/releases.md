@@ -5,7 +5,7 @@ exact tarball that passed local qualification.
 
 ## Qualify the package
 
-Use the finalized public source checkout with version `0.1.0` in `package.json`
+Use the finalized public source checkout with version `0.1.1` in `package.json`
 and its completed changelog entry. To produce a qualification output, select a
 fresh directory outside the checkout:
 
@@ -19,15 +19,15 @@ node distribution/verify-package.mjs --source /absolute/forge-source --output /a
 The qualifier packs the application and installs that exact tarball in isolated
 directories outside the checkout. It checks the commands, public library exports,
 browser assets, Direction storage, operating guidance, specifications, and licenses.
-It retains `neutral-forge-0.1.0.tgz`, `report.json`, the package inventory, and logs.
+It retains `neutral-forge-0.1.1.tgz`, `report.json`, the package inventory, and logs.
 Preserve this output and use the same tarball for publication.
 
 Inspect `report.json` for a passed result, package name `@neutral/forge`, version
-`0.1.0`, and the performed checks and limits. Compare the archive's SHA-256 with
+`0.1.1`, and the performed checks and limits. Compare the archive's SHA-256 with
 `artifacts[0].sha256` in that report:
 
 ```sh
-shasum -a 256 /absolute/forge-package-check/neutral-forge-0.1.0.tgz
+shasum -a 256 /absolute/forge-package-check/neutral-forge-0.1.1.tgz
 ```
 
 On Linux, `sha256sum` can compute the same checksum. If the archive changed, or the
@@ -48,7 +48,7 @@ See the [npm login command](https://docs.npmjs.com/cli/v11/commands/npm-login/).
 Publish the checked archive explicitly:
 
 ```sh
-npm publish /absolute/forge-package-check/neutral-forge-0.1.0.tgz --access public --tag latest --registry https://registry.npmjs.org/
+npm publish /absolute/forge-package-check/neutral-forge-0.1.1.tgz --access public --tag latest --registry https://registry.npmjs.org/
 ```
 
 Inspect the result before retrying a failed command. A published package name and
@@ -67,8 +67,8 @@ checksums to the matching GitHub release.
 After publication, check the registry installation with the released version:
 
 ```sh
-npx @neutral/forge@0.1.0 --version
-npx @neutral/forge@0.1.0 --help
+npx @neutral/forge@0.1.1 --version
+npx @neutral/forge@0.1.1 --help
 ```
 
 Controller installation and Worker container provisioning remain separate. Follow
