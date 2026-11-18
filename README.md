@@ -1,5 +1,7 @@
 # Forge
 
+> Forge has moved to [github.com/methodologies/forge](https://github.com/methodologies/forge), and its npm package to [`@methodologies/forge`](https://www.npmjs.com/package/@methodologies/forge). This repository is archived; it keeps Forge's history through 0.1.1.
+
 Forge is a workspace for directing sustained software development with agents.
 A goal can begin as a rough idea, an unresolved problem, or a change you want to
 see. An agent works through it using the repository and its tools: investigating
